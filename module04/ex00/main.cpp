@@ -6,7 +6,7 @@
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:23:20 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/05 14:24:36 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:03:44 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main()
 	std::cout << std::endl;
 	usleep (1200000);
 	std::cout << "Animal 2 :Cat instance" << std::endl;
-	const Animal* cat = new Cat();
+	const Cat* cat = new Cat();
 	std::cout << std::endl;
 	usleep (1200000);
 	std::cout << "Animal 3 :Dog instance" << std::endl;
