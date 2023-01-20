@@ -6,7 +6,7 @@
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:23:20 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/05 17:25:47 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:43:17 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ int main()
 	Animal *clonecat (animalArray[0]);
 	std::cout << "Cloned cat: " <<&clonecat << std::endl;
 	std::cout << "Original Cat: " <<&animalArray[0] << std::endl;
-	Animal *clonedog (animalArray[1]);
-	std::cout << "Cloned dog : "<< &clonedog << std::endl;
+
+	Cat cat;
+	Cat cat2 (cat);
+	// std::cout << "Cloned dog : "<< &clonedog << std::endl;
 	std::cout << "Original dog: " <<&animalArray[1] << std::endl;
-
 	std::cout << "\n\nDeletes:" << std::endl;
-	for (int i = 0; i < 6; i++)
-		delete animalArray[i];
-
+	// for (int i = 0; i < 6; i++)
+	// 	delete animalArray[i];
+	std::cout << &cat.getIdea(1) << std::endl;
+	std::cout << &cat2.getIdea(1) << std::endl;
 }	
