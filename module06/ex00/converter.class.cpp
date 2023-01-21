@@ -6,7 +6,7 @@
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:25:58 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/13 15:26:14 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/21 06:57:00 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <stdint.h>
+#include <limits.h>
 #include <float.h>
 #include <iomanip>
 
@@ -107,7 +108,7 @@ bool	Converter::_isAValidParameter(void)
 		}
 		if (this->_pureArgument[i] == '-' && i == 0)
 			continue;
-		if (this->_pureArgument[i] == 'f' && i == strSize - 1)
+		if (this->_pureArgument[i] == 'f' && i == strSize - 1 && point)
 			continue;
 		else
 			letters ++;
@@ -129,7 +130,7 @@ void	Converter::_convertInitialType(void)
 		case INTTYPE:
 			long int holder;
 			holder	= strtol (this->_pureArgument.c_str(), NULL, 10);
-			if (holder > INT32_MAX || holder < INT32_MIN || errno )
+			if (holder > INT_MAX || holder < INT_MIN || errno )
 			{
 				this->_identifier = OVERFLOW;
 				return ;
@@ -197,7 +198,7 @@ void	Converter::_convertFromASpecificType(double type)
 {	
 	if (type < 0 || type > 255)
 		this->_overflowChar = true;
-	if (type < INT32_MIN || type > INT32_MAX)
+	if (type < INT_MIN || type > INT_MAX)
 		this->_overflowInt = true;
 	if (type < -FLT_MIN || type > FLT_MAX)
 		this->_overflowFloat = true;
@@ -209,9 +210,9 @@ void	Converter::_convertFromASpecificType(double type)
 
 void	Converter::_convertFromASpecificType(char type)
 {	
-	this->_intType = static_cast <int> (type);
-	this->_floatType = static_cast <float> (type);
-	this->_doubleType = static_cast <double> (type);
+	this->_intType = static_cast<int>(type);
+	this->_floatType = static_cast<float>(type);
+	this->_doubleType = static_cast<double>(type);
 	return ;
 }
 
@@ -220,7 +221,7 @@ void	Converter::_convertFromASpecificType(float type)
 	if (type < 0 || type > 255)
 		this->_overflowChar = true;
 	this->_charType = static_cast <char> (type);
-	if (type < INT32_MIN || type > INT32_MAX)
+	if (type < INT_MIN || type > INT_MAX)
 		this->_overflowInt = true;
 	this->_intType = static_cast <int> (type);
 	this->_doubleType = static_cast <double> (type);
@@ -235,7 +236,7 @@ void	Converter::chooseDisplay(void)
 			this->_displayInvalidArg();
 			return;
 		case OVERFLOW:
-			this->_displayOverflow();
+			this->_displayAllInfos();
 			return;
 		case PSEUDODOUBLETYPE :
 			this->_displayPseudos();
@@ -260,15 +261,6 @@ void	Converter::_displayInvalidArg(void)
 				<< "Float: A number between 1.175494351E-38 and 3.402823466E+38 with a letter \"f\" at the end as a identifier\n" << std::endl;
 }
 
-void	Converter::_displayOverflow(void)
-{
-	std::cout	<< "Invalid number used. \n"
-				<< "Remember the limits of each type: \n"
-				<< "Int: A number between -2147483648 and 2147483647\n"
-				<< "Float: A number between 1.175494351E-38 and 3.402823466E+38\n" 
-				<< "Double: A number between 2.2250738585072014E-308 and 1.79769313486231570e+308d\n" << std::endl;
-}
-
 void	Converter::_displayPseudos(void)
 {
 	std::cout	<< "char: impossible \n"
@@ -281,27 +273,30 @@ void	Converter::_displayAllInfos(void)
 {	
 	// CHECK CHAR PRINT
 	std::cout << std::fixed;
-	if (this->_overflowChar == true)
-		std::cout	<< "char: overflow (Min value: 0 / Max value: 255)" << std::endl;
+	if (this->_overflowChar == true || this->_identifier == OVERFLOW)
+		std::cout	<< "char: impossible" << std::endl;
 	else if (isprint(this->_charType))
 		std::cout	<< "char: " << this->_charType << std::endl;
 	else	
 		std::cout	<< "char: Non displayable" << std::endl;
 
 	// CHECK INT PRINT
-	if (this->_overflowInt == true)
-		std::cout	<< "int: overflow (Min value: -2147483648 / Max value: 2147483647)" << std::endl;
+	if (this->_overflowInt == true || this->_identifier == OVERFLOW)
+		std::cout	<< "int: impossible" << std::endl;
 	else 
 		std::cout	<< "int: " << this->_intType << std::endl;
 
 	// CHECK FLOAT PRINT
-	if (this->_overflowFloat == true)
-		std::cout << "float: overflow (Min value: 1.175494351E-38 / Max value: 3.402823466E+38)" << std::endl;
+	if (this->_overflowFloat == true || this->_identifier == OVERFLOW)
+		std::cout << "float: impossible" << std::endl;
 	else 
 		std::cout << std::setprecision(1) << "float: " << this->_floatType << "f" <<std::endl;
 
 	// PRINT DOUBLE
-	std::cout << std::setprecision(1) << "double: " << this->_doubleType << std::endl;
+	if (this->_identifier == OVERFLOW)
+		std::cout << "double: impossible" << std::endl;
+	else
+		std::cout << std::setprecision(1) << "double: " << this->_doubleType << std::endl;
 
 	return ;
 }

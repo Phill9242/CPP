@@ -6,11 +6,11 @@
 #    By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 21:45:53 by phiolive          #+#    #+#              #
-#    Updated: 2023/01/20 23:46:31 by phiolive         ###   ########.fr        #
+#    Updated: 2023/01/21 00:47:47 by phiolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	compare
+NAME	=	array
 CXX	=	c++
 RM	=	rm -f
 CPPFLAGS	= -g -std=c++98 -Wall -Wextra -Werror

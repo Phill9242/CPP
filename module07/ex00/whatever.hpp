@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 17:42:04 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/20 23:30:31 by phiolive         ###   ########.fr       */
+/*   Created: 2023/01/20 23:39:23 by phiolive          #+#    #+#             */
+/*   Updated: 2023/01/21 00:03:10 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "converter.class.hpp"
-#include <cstdio>
-int main (int argv, char **argc)
-{
+#ifndef WHATEVER_HPP
+# define WHATEVER_HPP
 
-	if (argv != 2)
-	{	
-		std::cout << "Invalid number of arguments: You need exactly 1 (one) argument\n" << std::endl ;
-		return (1);
-	}
-	std::string str = argc[1];
-	Converter convertedArg (str);
-	convertedArg.chooseDisplay();
+template <typename T>
+T const	&max(T const &x, T const &y) {
+	return (x > y ? x : y);
 }
+
+template <typename T>
+T const	&min(T const &x, T const &y) {
+	return (x < y ? x : y);
+}
+
+template <typename T>
+void	swap(T &x, T &y) {
+	T temp = x;
+	x = y;
+	y = temp;
+}
+
+#endif 

@@ -6,7 +6,7 @@
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:25:54 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/13 15:24:37 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:19:38 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ class Converter
 		// DISPLAYS
 		
 		void		_displayPseudos (void);
-		void		_displayOverflow (void);
 		void		_displayAllInfos(void);
 		void		_displayInvalidArg(void);
 };	

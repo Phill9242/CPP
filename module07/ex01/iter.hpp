@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 17:42:04 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/20 23:30:31 by phiolive         ###   ########.fr       */
+/*   Created: 2023/01/21 00:03:59 by phiolive          #+#    #+#             */
+/*   Updated: 2023/01/21 00:33:47 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "converter.class.hpp"
-#include <cstdio>
-int main (int argv, char **argc)
-{
+#ifndef ITER_H
+# define ITER_H
 
-	if (argv != 2)
-	{	
-		std::cout << "Invalid number of arguments: You need exactly 1 (one) argument\n" << std::endl ;
-		return (1);
+#include <iostream>
+template<typename T>
+void iter(T *array, unsigned int lenght, void(*f)(T &)) {
+	while (lenght--)
+	{
+		f(*array);
+		array++;
 	}
-	std::string str = argc[1];
-	Converter convertedArg (str);
-	convertedArg.chooseDisplay();
+};
+
+template<typename T>
+void doubleNumber (T & toDouble)
+{
+	toDouble *= 2;
+	return ;
 }
+
+template<typename T>
+void upperChar (T & toUp)
+{
+	toUp -= 32;
+	return ;
+}
+
+
+#endif 
