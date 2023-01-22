@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   array.class.hpp                                    :+:      :+:    :+:   */
+/*   array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:17:48 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/22 16:26:03 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/23 00:41:00 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARRAY_CLASS_HPP
-# define ARRAY_CLASS_HPP
+#ifndef ARRAY_HPP
+# define ARRAY_HPP
 
 #include <iostream>
 

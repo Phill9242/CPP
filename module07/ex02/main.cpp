@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:17:50 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/22 16:45:58 by phiolive         ###   ########.fr       */
+/*   Updated: 2023/01/23 00:41:05 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "array.class.hpp"
+#include "array.hpp"
 
 int main (void)
 { 	
