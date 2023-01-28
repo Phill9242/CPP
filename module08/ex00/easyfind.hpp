@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   easyfind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phiolive <phiolive@tudent.42sp.org.br>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 00:03:59 by phiolive          #+#    #+#             */
-/*   Updated: 2023/01/22 23:13:28 by phiolive         ###   ########.fr       */
+/*   Created: 2023/01/24 18:12:58 by phiolive          #+#    #+#             */
+/*   Updated: 2023/01/24 18:17:33 by phiolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_H
-# define ITER_H
+#ifndef EASYFIND_HPP
+# define EASEFIND_HPP
 
 #include <iostream>
-template<typename T>
-void iter(T *array, unsigned int lenght, void(*f)(T &)) {
-	while (lenght--)
-	{
-		f(*array);
-		array++;
-	}
+#include <algorithm>
+
+class NotFoundException : public std::exception
+{
+	public:
+		virtual const char* what() const throw()
+		{
+			return ("Couldn't find the number");
+		}
 };
 
 template<typename T>
-void doubleNumber (T & toDouble)
+typename T::iterator easyfind(T &holder, int object)
 {
-	toDouble *= 2;
-	return ;
+	typename T::iterator iterator = std::find(holder.begin(), holder.end(), object);
+	if (iterator == holder.end())
+		throw NotFoundException();
+	return (iterator);
 }
 
-template<typename T>
-void upperChar (T & toUp)
-{
-	toUp -= 32;
-	return ;
-}
-
-
-#endif 
+#endif

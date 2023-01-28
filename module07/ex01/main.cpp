@@ -3,39 +3,26 @@
 #include <iostream>
 
 
-int main(void)
+class Awesome
 {
-	// ITER WITH INTS----------------------------------------------
-	int numbers[10];
-	for (int i = 0; i < 10; i++)
-		numbers[i] = i * 12;
+  public:
+    Awesome( void ) : _n( 42 ) { return; }
+    int get( void ) const { return this->_n; }
+  private:
+    int _n;
+};
 
-	std::cout << "	\nPRINT ORIGINAL NUMBERS:" << std::endl;
-	for (int i = 0; i < 10; i++)
-		std::cout << numbers[i] << " ";
- 	std::cout << std::endl ;
-	for (int i = 0; i < 10; i++)
-		numbers[i] = i * 12;
-	iter(numbers, 10, doubleNumber);
+std::ostream & operator<<( std::ostream & o, Awesome const & rhs ) { o << rhs.get(); return o; }
 
-	std::cout << "	\nPRINT DOUBLED NUMBERS:" << std::endl;
-	for (int i = 0; i < 10; i++)
-		std::cout << numbers[i] << " ";
- 	std::cout << std::endl ;
-	
-	// ITER WITH CHARS-------------------------------------------------
-	char chars[10];
-	for (int i = 0; i < 10; i++)
-		chars[i] = i + 97;
+template< typename T >
+void print( T const & x ) { std::cout << x << std::endl; return; }
 
-	std::cout << "\nPRINT ORIGINAL CHARS: \n" << std::endl;
-	for (int i = 0; i < 10; i++)
-		std::cout << chars[i];
- 	std::cout << std::endl ;
+int main() {
+  int tab[] = { 0, 1, 2, 3, 4 };  // <--- I never understood why you can't write int[] tab. Wouldn't that make more sense?
+  Awesome tab2[5];
 
-	std::cout << "\nPRINT CAPITALIZED CHARS: \n" << std::endl;
-	iter(chars, 10, upperChar);
-	for (int i = 0; i < 10; i++)
-		std::cout << chars[i];
- 	std::cout << "\n" <<std::endl ;
+  iter( tab, 5, print<int> );
+  iter( tab2, 5, print<Awesome> );
+
+  return 0;
 }
