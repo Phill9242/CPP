@@ -7,7 +7,7 @@ int main(int argc, char** argv)
         std::cout << "Error: you must use only one argument" << std::endl ; 
         return (1);
     }
-    reversePolishNotationCalculator(argv[1]);
-    return (0);
+    
+    return (reversePolishNotationCalculator(argv[1]));
 }
 
