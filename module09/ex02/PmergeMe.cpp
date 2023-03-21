@@ -21,49 +21,109 @@ void divideInSmallLists (std::list<int> &argsList, std::list<std::list<int> > &a
 	return ;
 }
 
+void divideInSmallVectors (std::vector<int> &argsVector, std::vector<std::vector<int> > &allVectors)
+{	
+	std::vector<int> temp;
+	for (std::vector<int>::iterator it = argsVector.begin(); it != argsVector.end(); ++it)
+	{
+		temp.push_back(*it);
+		if (temp.size() == 10)
+		{
+			allVectors.push_back(temp);
+			temp.clear();
+		}
+	}
+	if (!temp.empty())
+	{
+		allVectors.push_back(temp);
+	}
+
+}
 
 void swap(std::list<int>::iterator a, std::list<int>::iterator b)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+
+void swapVector(std::vector<int>::iterator a, std::vector<int>::iterator b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 void bubbleSort(std::list<int> &inputList)
 {
-    int n = inputList.size();
-    bool swapped = true;
+	int n = inputList.size();
+	bool swapped = true;
 
-    while (swapped)
-    {
-        swapped = false;
-        std::list<int>::iterator prev = inputList.begin();
-        std::list<int>::iterator current = prev;
-        ++current;
+	while (swapped)
+	{
+		swapped = false;
+		std::list<int>::iterator prev = inputList.begin();
+		std::list<int>::iterator current = prev;
+		++current;
 
-        for (int i = 1; i < n; i++)
-        {
-            if (*prev > *current)
-            {
-                swap(prev, current);
-                swapped = true;
-            }
-            ++prev;
-            ++current;
-        }
-        --n;
-    }
+		for (int i = 1; i < n; i++)
+		{
+			if (*prev > *current)
+			{
+				swap(prev, current);
+				swapped = true;
+			}
+			++prev;
+			++current;
+		}
+		--n;
+	}
 }
 
+void bubbleSortVector(std::vector<int> &inputVector)
+{
+	int n = inputVector.size();
+	bool swapped = true;
+
+	while (swapped)
+	{
+		swapped = false;
+		std::vector<int>::iterator prev = inputVector.begin();
+		std::vector<int>::iterator current = prev;
+		++current;
+
+		for (int i = 1; i < n; i++)
+		{
+			if (*prev > *current)
+			{
+				swapVector(prev, current);
+				swapped = true;
+			}
+			++prev;
+			++current;
+		}
+		--n;
+	}
+	return ;
+}
 
 void applyBubbleSortInLists(std::list< std::list<int> > &allLists)
 {
-    for (std::list< std::list<int> >::iterator it = allLists.begin(); it != allLists.end(); ++it)
-    {
-        bubbleSort(*it);
-    }
+	for (std::list< std::list<int> >::iterator it = allLists.begin(); it != allLists.end(); ++it)
+	{
+		bubbleSort(*it);
+	}
 }
 
+
+void applyBubbleSortInVectors(std::vector< std::vector<int> > &allVectors)
+{
+	for (std::vector< std::vector<int> >::iterator it = allVectors.begin(); it != allVectors.end(); ++it)
+	{
+		bubbleSortVector(*it);
+	}
+}
 void convertArgsToIntList (int argc, char **argv, std::list<int> &argsList)
 {
 	for (int i = 1; i < argc; i++)
@@ -74,54 +134,131 @@ void convertArgsToIntList (int argc, char **argv, std::list<int> &argsList)
 	
 }
 
-void merge(std::list<int> &left, std::list<int> &right, std::list<int> &merged)
+void convertArgsToIntVector (int argc, char **argv, std::vector<int> &argsVector)
 {
-    std::list<int>::iterator left_it = left.begin();
-    std::list<int>::iterator right_it = right.begin();
+	for (int i = 1; i < argc; i++)
+	{	
+		int temp = atoi(argv[i]);
+		argsVector.push_back(temp);
+	}
+	
+}
+void mergeList(std::list<int> &left, std::list<int> &right, std::list<int> &merged)
+{
+	std::list<int>::iterator left_it = left.begin();
+	std::list<int>::iterator right_it = right.begin();
 
-    while (left_it != left.end() && right_it != right.end())
-    {
-        if (*left_it <= *right_it)
-        {
-            merged.splice(merged.end(), left, left_it++);
-        }
-        else
-        {
-            merged.splice(merged.end(), right, right_it++);
-        }
-    }
+	while (left_it != left.end() && right_it != right.end())
+	{
+		if (*left_it <= *right_it)
+		{
+			merged.splice(merged.end(), left, left_it++);
+		}
+		else
+		{
+			merged.splice(merged.end(), right, right_it++);
+		}
+	}
 
-    merged.splice(merged.end(), left);
-    merged.splice(merged.end(), right);
+	merged.splice(merged.end(), left);
+	merged.splice(merged.end(), right);
 }
 
 void mergeLists(std::list< std::list<int> > &allLists, std::list<int> &argsList)
 {
-    while (allLists.size() > 1)
-    {
-        std::list<int> merged;
-        std::list<int> left(allLists.front());
-        allLists.pop_front();
-        std::list<int> right(allLists.front());
-        allLists.pop_front();
+	while (allLists.size() > 1)
+	{
+		std::list<int> merged;
+		std::list<int> left(allLists.front());
+		allLists.pop_front();
+		std::list<int> right(allLists.front());
+		allLists.pop_front();
 
-        merge(left, right, merged);
-        allLists.push_back(merged);
-    }
+		mergeList(left, right, merged);
+		allLists.push_back(merged);
+	}
 
-    if (!allLists.empty())
-    {
-        argsList = allLists.front();
-    }
+	if (!allLists.empty())
+	{
+		argsList = allLists.front();
+	}
 }
 
-void printList(const std::list<int> &argsList)
+void mergeSortedVectors(const std::vector<int>& v1, const std::vector<int>& v2, std::vector<int>& merged)
 {
-    for (std::list<int>::const_iterator it = argsList.begin(); it != argsList.end(); ++it)
-    {
-        std::cout << *it << ' ';
-    }
-    std::cout << std::endl;
+	merged.resize(v1.size() + v2.size());
+
+	std::vector<int>::const_iterator it1 = v1.begin();
+	std::vector<int>::const_iterator it2 = v2.begin();
+	std::vector<int>::iterator itMerged = merged.begin();
+
+	while (it1 != v1.end() && it2 != v2.end())
+	{
+		if (*it1 <= *it2)
+		{
+			*itMerged = *it1;
+			++it1;
+		}
+		else
+		{
+			*itMerged = *it2;
+			++it2;
+		}
+		++itMerged;
+	}
+
+	while (it1 != v1.end())
+	{
+		*itMerged = *it1;
+		++it1;
+		++itMerged;
+	}
+
+	while (it2 != v2.end())
+	{
+		*itMerged = *it2;
+		++it2;
+		++itMerged;
+	}
+}
+
+void mergeVectors(const std::vector<std::vector<int> >& allVectors, std::vector<int>& argsVector)
+{
+	if (allVectors.empty())
+	{
+		return;
+	}
+
+	argsVector = allVectors[0];
+
+	for (std::vector<std::vector<int> >::const_iterator it = allVectors.begin() + 1; it != allVectors.end(); ++it)
+	{
+		std::vector<int> merged;
+		mergeSortedVectors(argsVector, *it, merged);
+		argsVector = merged;
+	}
+}
+
+
+void printList(const std::list<int> &argsList)
+{	
+	int i = 0;
+	for (std::list<int>::const_iterator it = argsList.begin(); it != argsList.end(); ++it)
+	{
+		if (i++ < 4)
+			std::cout << *it << ' ';
+	}
+	std::cout << std::endl;
+}
+void printVector(const std::vector<int> &argsList)
+{	
+	int i = 0;
+	for (std::vector<int>::const_iterator it = argsList.begin(); it != argsList.end(); ++it)
+	{	
+		if (i++ < 4)
+			std::cout << *it << ' ';
+	}
+	std::cout << std::endl;
 }
 
 std::list<int>    listSort (int argc, char **argv)
@@ -130,12 +267,23 @@ std::list<int>    listSort (int argc, char **argv)
 	std::list< std::list<int> > allLists;
 
 	convertArgsToIntList (argc, argv, argsList);
-    divideInSmallLists (argsList, allLists);
+	divideInSmallLists (argsList, allLists);
 	applyBubbleSortInLists(allLists);
 	mergeLists(allLists, argsList);
-    return (argsList);
+	return (argsList);
 }
 
+std::vector<int>    vectorSort (int argc, char **argv)
+{
+	std::vector<int> argsVector;
+	std::vector< std::vector<int> > allVectors;
+
+	convertArgsToIntVector (argc, argv, argsVector);
+	divideInSmallVectors (argsVector, allVectors);
+	applyBubbleSortInVectors(allVectors);
+	mergeVectors(allVectors, argsVector);
+	return (argsVector);
+}
 
 void    checkArgv (int argc, char **argv)
 {
@@ -154,16 +302,20 @@ void    checkArgv (int argc, char **argv)
 
 void	ft_PmergeMe(int argc, char **argv)
 {
-    clock_t inicio, fim;
-    double tempoDeExecucao1;
+	clock_t inicio, fim;
+	double tempoDeExecucao1, tempoDeExecucao2;
 
 	checkArgv (argc, argv);
-    inicio = clock();
+	inicio = clock();
 	std::list<int> list = listSort (argc, argv);
-    fim = clock();
-
-    tempoDeExecucao1 = (fim - inicio);
-    std::cout << tempoDeExecucao1 << std::endl;
-    
-	// printList(list);
+	fim = clock();
+	tempoDeExecucao1 = (fim - inicio);
+	inicio = clock();
+	std::vector<int> vector = vectorSort (argc, argv);
+	fim = clock();
+	tempoDeExecucao2 = (fim - inicio);
+	std::cout << tempoDeExecucao1 << std::endl;
+	std::cout << tempoDeExecucao2 << std::endl;
+	printList(list);
+	printVector(vector);
 }

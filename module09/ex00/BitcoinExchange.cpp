@@ -13,18 +13,21 @@ int   bitcoinExchange (char* fileName)
 void	readInputFile (std::ifstream &inputFile, std::map<std::string, double> bitcoinMap)
 {	
 	std::string line;
-
+    bool firstLine = true;
 	while (std::getline(inputFile, line)) 
 	{
 		std::string date;
 		float value;
 
+        if (firstLine && line == "date | value")
+            continue;
 		if (validateInputLine(line, date, value)) {
 			std::string closestDate = findClosestDate(bitcoinMap, date);
 			double exchangeRate = bitcoinMap[closestDate];
 			double result = value * exchangeRate;
 			std::cout << date << " => " << value << " = " << result << '\n';
 		}
+        firstLine = false;
 	}
 	return ;
 }
