@@ -300,22 +300,69 @@ void    checkArgv (int argc, char **argv)
 	}
 }
 
+void    printNotOrdered(char **argv)
+{	
+	std::cout << "Before: ";
+	for (int i = 1; argv[i]; i++)
+	{
+		std::cout << argv[i] << " ";
+		if (i > 4)
+		{	
+			std::cout << "[...]";
+			break;
+		}
+	}
+	std::cout << std::endl;
+}
+
+
+void printOrdered (std::list<int> list)
+{
+	int i = 0;
+	std::cout << "After:  ";
+	for (std::list<int>::const_iterator it = list.begin(); it != list.end(); ++it)
+	{
+		std::cout << *it << ' ';
+		if (i++ > 3)
+		{	
+			std::cout << "[...]";
+			break;
+		}
+	}
+	std::cout << std::endl;
+}
+
+void	printTimes (std::list<int> list, std::vector<int> vector, double timeVector, double timeList)
+{
+	std::cout	<< "Time to process a range of " << list.size() 
+				<< " elements with std::list :   " << timeList << " us" << std::endl;
+
+	std::cout	<< "Time to process a range of " << vector.size() 
+				<< " elements with std::vector : " << timeVector << " us" << std::endl;
+	
+}
+
+
+void    printResults (char **argv, std::list<int> list, std::vector<int> vector, double timeVector, double timeList)
+{
+	printNotOrdered (argv);
+	printOrdered (list);
+	printTimes (list, vector, timeVector, timeList);
+}
+
 void	ft_PmergeMe(int argc, char **argv)
 {
 	clock_t inicio, fim;
-	double tempoDeExecucao1, tempoDeExecucao2;
+	double timeList, timeVector;
 
 	checkArgv (argc, argv);
 	inicio = clock();
 	std::list<int> list = listSort (argc, argv);
 	fim = clock();
-	tempoDeExecucao1 = (fim - inicio);
+	timeList = (static_cast<double>(fim - inicio) / CLOCKS_PER_SEC) * 1e6;
 	inicio = clock();
 	std::vector<int> vector = vectorSort (argc, argv);
 	fim = clock();
-	tempoDeExecucao2 = (fim - inicio);
-	std::cout << tempoDeExecucao1 << std::endl;
-	std::cout << tempoDeExecucao2 << std::endl;
-	printList(list);
-	printVector(vector);
+	timeVector = (static_cast<double>(fim - inicio) / CLOCKS_PER_SEC) * 1e6;
+	printResults (argv, list, vector, timeVector, timeList);
 }
