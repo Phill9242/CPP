@@ -40,38 +40,29 @@ void divideInSmallVectors (std::vector<int> &argsVector, std::vector<std::vector
 
 }
 
-void swap(std::list<int>::iterator a, std::list<int>::iterator b)
+template <typename Container>
+void swap(typename Container::iterator a, typename Container::iterator b)
 {
 	int temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-
-void swapVector(std::vector<int>::iterator a, std::vector<int>::iterator b)
-{
-	int temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-void bubbleSort(std::list<int> &inputList)
+template <typename Container>
+void bubbleSort(Container &inputList) 
 {
 	int n = inputList.size();
 	bool swapped = true;
 
-	while (swapped)
-	{
+	while (swapped) {
 		swapped = false;
-		std::list<int>::iterator prev = inputList.begin();
-		std::list<int>::iterator current = prev;
+		typename Container::iterator prev = inputList.begin();
+		typename Container::iterator current = prev;
 		++current;
 
-		for (int i = 1; i < n; i++)
-		{
-			if (*prev > *current)
-			{
-				swap(prev, current);
+		for (int i = 1; i < n; i++) {
+			if (*prev > *current) {
+				std::swap(*prev, *current);
 				swapped = true;
 			}
 			++prev;
@@ -81,69 +72,28 @@ void bubbleSort(std::list<int> &inputList)
 	}
 }
 
-void bubbleSortVector(std::vector<int> &inputVector)
-{
-	int n = inputVector.size();
-	bool swapped = true;
 
-	while (swapped)
-	{
-		swapped = false;
-		std::vector<int>::iterator prev = inputVector.begin();
-		std::vector<int>::iterator current = prev;
-		++current;
+template <typename OuterContainer>
+void applyBubbleSort(OuterContainer &allContainers) {
 
-		for (int i = 1; i < n; i++)
-		{
-			if (*prev > *current)
-			{
-				swapVector(prev, current);
-				swapped = true;
-			}
-			++prev;
-			++current;
-		}
-		--n;
-	}
-	return ;
-}
-
-void applyBubbleSortInLists(std::list< std::list<int> > &allLists)
-{
-	for (std::list< std::list<int> >::iterator it = allLists.begin(); it != allLists.end(); ++it)
+	for (typename OuterContainer::iterator it = allContainers.begin(); it != allContainers.end(); ++it) 
 	{
 		bubbleSort(*it);
 	}
 }
 
-
-void applyBubbleSortInVectors(std::vector< std::vector<int> > &allVectors)
-{
-	for (std::vector< std::vector<int> >::iterator it = allVectors.begin(); it != allVectors.end(); ++it)
-	{
-		bubbleSortVector(*it);
-	}
-}
-void convertArgsToIntList (int argc, char **argv, std::list<int> &argsList)
+template <typename Container>
+void convertArgs (int argc, char **argv, Container &args)
 {
 	for (int i = 1; i < argc; i++)
 	{	
 		int temp = atoi(argv[i]);
-		argsList.push_back(temp);
+		args.push_back(temp);
 	}
 	
 }
 
-void convertArgsToIntVector (int argc, char **argv, std::vector<int> &argsVector)
-{
-	for (int i = 1; i < argc; i++)
-	{	
-		int temp = atoi(argv[i]);
-		argsVector.push_back(temp);
-	}
-	
-}
-void mergeList(std::list<int> &left, std::list<int> &right, std::list<int> &merged)
+void mergeLists(std::list<int> &left, std::list<int> &right, std::list<int> &merged)
 {
 	std::list<int>::iterator left_it = left.begin();
 	std::list<int>::iterator right_it = right.begin();
@@ -164,7 +114,7 @@ void mergeList(std::list<int> &left, std::list<int> &right, std::list<int> &merg
 	merged.splice(merged.end(), right);
 }
 
-void mergeLists(std::list< std::list<int> > &allLists, std::list<int> &argsList)
+void mergeAllLists(std::list< std::list<int> > &allLists, std::list<int> &argsList)
 {
 	while (allLists.size() > 1)
 	{
@@ -174,7 +124,7 @@ void mergeLists(std::list< std::list<int> > &allLists, std::list<int> &argsList)
 		std::list<int> right(allLists.front());
 		allLists.pop_front();
 
-		mergeList(left, right, merged);
+		mergeLists(left, right, merged);
 		allLists.push_back(merged);
 	}
 
@@ -184,7 +134,7 @@ void mergeLists(std::list< std::list<int> > &allLists, std::list<int> &argsList)
 	}
 }
 
-void mergeSortedVectors(const std::vector<int>& v1, const std::vector<int>& v2, std::vector<int>& merged)
+void mergeVectors(const std::vector<int>& v1, const std::vector<int>& v2, std::vector<int>& merged)
 {
 	merged.resize(v1.size() + v2.size());
 
@@ -222,7 +172,7 @@ void mergeSortedVectors(const std::vector<int>& v1, const std::vector<int>& v2, 
 	}
 }
 
-void mergeVectors(const std::vector<std::vector<int> >& allVectors, std::vector<int>& argsVector)
+void mergeAllVectors(const std::vector<std::vector<int> >& allVectors, std::vector<int>& argsVector)
 {
 	if (allVectors.empty())
 	{
@@ -234,42 +184,21 @@ void mergeVectors(const std::vector<std::vector<int> >& allVectors, std::vector<
 	for (std::vector<std::vector<int> >::const_iterator it = allVectors.begin() + 1; it != allVectors.end(); ++it)
 	{
 		std::vector<int> merged;
-		mergeSortedVectors(argsVector, *it, merged);
+		mergeVectors(argsVector, *it, merged);
 		argsVector = merged;
 	}
 }
 
-
-void printList(const std::list<int> &argsList)
-{	
-	int i = 0;
-	for (std::list<int>::const_iterator it = argsList.begin(); it != argsList.end(); ++it)
-	{
-		if (i++ < 4)
-			std::cout << *it << ' ';
-	}
-	std::cout << std::endl;
-}
-void printVector(const std::vector<int> &argsList)
-{	
-	int i = 0;
-	for (std::vector<int>::const_iterator it = argsList.begin(); it != argsList.end(); ++it)
-	{	
-		if (i++ < 4)
-			std::cout << *it << ' ';
-	}
-	std::cout << std::endl;
-}
 
 std::list<int>    listSort (int argc, char **argv)
 {
 	std::list<int> argsList;
 	std::list< std::list<int> > allLists;
 
-	convertArgsToIntList (argc, argv, argsList);
+	convertArgs (argc, argv, argsList);
 	divideInSmallLists (argsList, allLists);
-	applyBubbleSortInLists(allLists);
-	mergeLists(allLists, argsList);
+	applyBubbleSort(allLists);
+	mergeAllLists(allLists, argsList);
 	return (argsList);
 }
 
@@ -278,15 +207,30 @@ std::vector<int>    vectorSort (int argc, char **argv)
 	std::vector<int> argsVector;
 	std::vector< std::vector<int> > allVectors;
 
-	convertArgsToIntVector (argc, argv, argsVector);
+	convertArgs (argc, argv, argsVector);
 	divideInSmallVectors (argsVector, allVectors);
-	applyBubbleSortInVectors(allVectors);
-	mergeVectors(allVectors, argsVector);
+	applyBubbleSort(allVectors);
+	mergeAllVectors(allVectors, argsVector);
 	return (argsVector);
 }
 
+void    areNumbersUnique(char **argv) {
+	std::set<int> uniqueNumbers;
+
+	for (int i = 1; argv[i]; i++) {
+		int number = std::atoi(argv[i]);
+
+		std::pair<std::set<int>::iterator, bool> result = uniqueNumbers.insert(number);
+		if (!result.second) {
+			std::cout << "Invalid input: do not use duplicated numbers" << std::endl;
+			exit (1);
+		}
+	}
+	return;
+}
+
 void    checkArgv (int argc, char **argv)
-{
+{   
 	for (int i = 1; i < argc; i++)
 	{	
 		for (int j = 0; argv[i][j]; j++)
@@ -298,6 +242,8 @@ void    checkArgv (int argc, char **argv)
 			}
 		}
 	}
+	areNumbersUnique(argv);
+	return ;
 }
 
 void    printNotOrdered(char **argv)
