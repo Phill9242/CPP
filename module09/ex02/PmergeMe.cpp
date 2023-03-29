@@ -219,7 +219,7 @@ std::vector<int>    vectorSort (int argc, char **argv)
 	return (argsVector);
 }
 
-void    areNumbersUnique(char **argv) {
+bool    areNumbersUnique(char **argv) {
 	std::set<int> uniqueNumbers;
 
 	for (int i = 1; argv[i]; i++) {
@@ -228,13 +228,13 @@ void    areNumbersUnique(char **argv) {
 		std::pair<std::set<int>::iterator, bool> result = uniqueNumbers.insert(number);
 		if (!result.second) {
 			std::cout << "Invalid input: do not use duplicated numbers" << std::endl;
-			exit (1);
+			return (false);
 		}
 	}
-	return;
+	return (true);
 }
 
-void    checkArgv (int argc, char **argv)
+bool   checkArgv (int argc, char **argv)
 {   
 	for (int i = 1; i < argc; i++)
 	{	
@@ -243,12 +243,11 @@ void    checkArgv (int argc, char **argv)
 			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
 			{	
 				std::cout << "Invalid input" << std::endl;
-				exit (1);
+				return (false);
 			}
 		}
 	}
-	areNumbersUnique(argv);
-	return ;
+	return (areNumbersUnique(argv));
 }
 
 void    printNotOrdered(char **argv)
@@ -306,7 +305,8 @@ void	ft_PmergeMe(int argc, char **argv)
 	clock_t inicio, fim;
 	double timeList, timeVector;
 
-	checkArgv (argc, argv);
+	if (checkArgv (argc, argv) == false)
+        return;
 	inicio = clock();
 	std::list<int> list = listSort (argc, argv);
 	fim = clock();

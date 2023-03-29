@@ -9,8 +9,8 @@
 #include <set>
 
 void	ft_PmergeMe(int argc, char **argv);
-void	checkArgv (int argc, char **argv);
-void    areNumbersUnique(char **argv);
+bool	checkArgv (int argc, char **argv);
+bool    areNumbersUnique(char **argv);
 
 void	divideInSmallVectors (std::vector<int> &argsVector, std::vector<std::vector<int> > &allVectors);
 void	divideInSmallLists (std::list<int> &argsList, std::list<std::list<int> > &allLists);

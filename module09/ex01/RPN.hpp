@@ -10,6 +10,6 @@
 #define SPACE 3
 
 int		reversePolishNotationCalculator(char *stringRPN);
-void	calculateStack (std::stack<int> &stack, char c);
+bool	calculateStack (std::stack<int> &stack, char c);
 
 #endif

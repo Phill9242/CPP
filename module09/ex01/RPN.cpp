@@ -16,7 +16,7 @@ static int  checkCharacter (char c)
 	return (1);
 }
 
-void	calculateStack (std::stack<int> &stack, char c)
+bool	calculateStack (std::stack<int> &stack, char c)
 {	
 	if (stack.size() < 2)
 	{
@@ -44,12 +44,12 @@ void	calculateStack (std::stack<int> &stack, char c)
             if (last == 0)
             {   
                 std::cout << "Invalid operation: a number cannot be divided by 0" << std::endl;
-                exit (1);
+                return (false);
             }
 			stack.push(secondToLast / last);
 			break;
 	}
-	return ;
+	return (true);
 }	
 
 int	reversePolishNotationCalculator(char *stringRPN)
@@ -73,7 +73,8 @@ int	reversePolishNotationCalculator(char *stringRPN)
 				stack.push(stringRPN[i] - '0');
 				break;
 			case (OPERATOR):
-				calculateStack(stack, stringRPN[i]);
+				if (calculateStack(stack, stringRPN[i]) == false)
+                    return (1);
                 break;
 			default:
                 break;
