@@ -41,6 +41,11 @@ void	calculateStack (std::stack<int> &stack, char c)
 			stack.push(secondToLast + last);
 			break;
 		case ('/'):
+            if (last == 0)
+            {   
+                std::cout << "Invalid operation: a number cannot be divided by 0" << std::endl;
+                exit (1);
+            }
 			stack.push(secondToLast / last);
 			break;
 	}
