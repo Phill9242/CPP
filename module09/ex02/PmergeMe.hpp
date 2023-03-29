@@ -37,9 +37,9 @@ template <typename Container>
 void swap(typename Container::iterator a, typename Container::iterator b);
 
 template <typename Container>
-void bubbleSort(Container &inputList);
+void insertionSort(Container &inputList);
 
 template <typename OuterContainer>
-void applyBubbleSort(OuterContainer &allContainers);
+void applyInsertionSort(OuterContainer &allContainers);
 
 #endif

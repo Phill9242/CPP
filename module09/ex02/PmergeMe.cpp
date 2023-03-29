@@ -49,36 +49,41 @@ void swap(typename Container::iterator a, typename Container::iterator b)
 }
 
 template <typename Container>
-void bubbleSort(Container &inputList) 
+void insertionSort(Container &inputList)
 {
-	int n = inputList.size();
-	bool swapped = true;
+    typename Container::iterator i, j;
+    typename Container::value_type key;
 
-	while (swapped) {
-		swapped = false;
-		typename Container::iterator prev = inputList.begin();
-		typename Container::iterator current = prev;
-		++current;
+    for (i = inputList.begin(); i != inputList.end(); ++i)
+    {
+        key = *i;
+        j = i;
 
-		for (int i = 1; i < n; i++) {
-			if (*prev > *current) {
-				std::swap(*prev, *current);
-				swapped = true;
-			}
-			++prev;
-			++current;
-		}
-		--n;
-	}
+        while (j != inputList.begin())
+        {
+            typename Container::iterator prev = j;
+            --prev;
+
+            if (*prev > key)
+            {
+                *j = *prev;
+                j--;
+            }
+            else
+                break;
+        }
+        *j = key;
+    }
 }
 
 
+
 template <typename OuterContainer>
-void applyBubbleSort(OuterContainer &allContainers) {
+void applyInsertionSort(OuterContainer &allContainers) {
 
 	for (typename OuterContainer::iterator it = allContainers.begin(); it != allContainers.end(); ++it) 
 	{
-		bubbleSort(*it);
+		insertionSort(*it);
 	}
 }
 
@@ -197,7 +202,7 @@ std::list<int>    listSort (int argc, char **argv)
 
 	convertArgs (argc, argv, argsList);
 	divideInSmallLists (argsList, allLists);
-	applyBubbleSort(allLists);
+	applyInsertionSort(allLists);
 	mergeAllLists(allLists, argsList);
 	return (argsList);
 }
@@ -209,7 +214,7 @@ std::vector<int>    vectorSort (int argc, char **argv)
 
 	convertArgs (argc, argv, argsVector);
 	divideInSmallVectors (argsVector, allVectors);
-	applyBubbleSort(allVectors);
+	applyInsertionSort(allVectors);
 	mergeAllVectors(allVectors, argsVector);
 	return (argsVector);
 }
