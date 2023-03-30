@@ -8,12 +8,9 @@ static int  checkCharacter (char c)
 		return OPERATOR;
 	if (c == ' ')
 		return SPACE;
-	else
-	{
-		std::cout << "Invalid character: " << c << std::endl;
-		exit (1);
-	}	
-	return (1);
+	std::cout << "Invalid character: " << c << std::endl;
+	return (INVALID);
+
 }
 
 bool	calculateStack (std::stack<int> &stack, char c)
@@ -21,7 +18,7 @@ bool	calculateStack (std::stack<int> &stack, char c)
 	if (stack.size() < 2)
 	{
 		std::cout << "Error: check your expression" << std::endl;
-		exit (1);
+		return (false);
 	}
 	int secondToLast, last;
 
@@ -41,11 +38,11 @@ bool	calculateStack (std::stack<int> &stack, char c)
 			stack.push(secondToLast + last);
 			break;
 		case ('/'):
-            if (last == 0)
-            {   
-                std::cout << "Invalid operation: a number cannot be divided by 0" << std::endl;
-                return (false);
-            }
+			if (last == 0)
+			{   
+				std::cout << "Invalid operation: a number cannot be divided by 0" << std::endl;
+				return (false);
+			}
 			stack.push(secondToLast / last);
 			break;
 	}
@@ -60,8 +57,9 @@ int	reversePolishNotationCalculator(char *stringRPN)
 	for (int i = 0; stringRPN[i]; i++)
 	{
 		actualChar = checkCharacter (stringRPN[i]);
-
-		if (actualChar != SPACE && previousChar != SPACE && i != 0)
+		if (actualChar == INVALID)
+			return (1);
+		if (actualChar != SPACE && i != 0 && previousChar != SPACE)
 		{	
 			std::cout << "Error: your numbers and operators must be separeted by a space !" << std::endl;
 			return (1);
@@ -74,10 +72,10 @@ int	reversePolishNotationCalculator(char *stringRPN)
 				break;
 			case (OPERATOR):
 				if (calculateStack(stack, stringRPN[i]) == false)
-                    return (1);
-                break;
+					return (1);
+				break;
 			default:
-                break;
+				break;
 		}
 		previousChar = actualChar;
 	}
