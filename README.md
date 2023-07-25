@@ -30,6 +30,6 @@ I dove into C++ templates to create generic, reusable code. This module covers t
 I learned how to work with templated containers, iterators, and algorithms in C++. This module provided me with the skills needed to create efficient and flexible data structures and algorithms.
 
 ### Module 09: C++ Standard Template Library (STL) and Advanced Containers
-In this final module, I focused on the C++ Standard Template Library (STL) and deepened my understanding of containers. I learned how to leverage the power of the STL to write efficient, maintainable, and portable C++ code. Also, I wrote a code that looks like fun to me, so I could understand the difference in the efficiency of each container in C++.
+In this final module, I focused on the C++ Standard Template Library (STL) and deepened my understanding of containers. I learned how to leverage the power of the STL to write efficient, maintainable, and portable C++ code. Also, I wrote a fun code, so I could understand the difference in the efficiency of each container in C++.
 
 By completing all nine modules, I have gained a comprehensive understanding of C++98 and am well-equipped to tackle a wide range of programming challenges.
